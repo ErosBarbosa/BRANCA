@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Equipe Branca - Gincana Unidos pelo Futuro - A linguagem como forma de resistência e identidade">
+    <title>Equipe Branca - Gincana UPF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Reset & Root Variables --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cor-branco: #ffffff;
+            --cor-gelo: #f8f9fa;
+            --cor-cinza-claro: #e9ecef;
+            --cor-texto: #2c3e50;
+            --cor-terracota: #d35400;
+            --cor-terra: #c0392b;
+            --cor-laranja: #e67e22;
+            --cor-preto: #1a1a1a;
+            --cor-overlay: rgba(26, 26, 26, 0.75);
+            --gradient-hero: linear-gradient(135deg, #d35400 0%, #c0392b 50%, #e67e22 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--cor-gelo);
+            color: var(--cor-texto);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Typography --- */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Container --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Hero Section --- */
+        header {
+            position: relative;
+            background: var(--gradient-hero);
+            color: var(--cor-branco);
+            text-align: center;
+            padding: 120px 24px 80px;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            font-weight: 900;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-theme {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 300;
+            margin-bottom: 48px;
+            opacity: 0.9;
+        }
+
+        .grito-guerra {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 32px 48px;
+            border-radius: 16px;
+            font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-weight: 600;
+            margin-top: 32px;
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .grito-guerra:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Banner Styles --- */
+        .hero-banner {
+            max-width: 100%;
+            height: auto;
+            max-height: 350px;
+            margin: 0 auto 32px;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            object-fit: cover;
+            /* Ensure video covers area nicely */
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                max-height: 250px;
+                margin: 0 auto 24px;
+            }
+        }
+
+        /* --- Main Content --- */
+        main {
+            padding: 80px 0;
+        }
+
+        /* --- Cards Grid --- */
+        .grid-provas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .card {
+            background: var(--cor-branco);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--cor-terracota);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-hero);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card h3 {
+            color: var(--cor-terracota);
+            margin: 16px 0 24px;
+        }
+
+        .card p {
+            margin-bottom: 16px;
+            color: var(--cor-texto);
+        }
+
+        .tag-prova {
+            background: var(--cor-preto);
+            color: var(--cor-branco);
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            border-radius: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 24px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            align-self: flex-start;
+        }
+
+        /* --- Buttons --- */
+        .btn-acessar {
+            display: inline-block;
+            margin-top: auto;
+            padding: 12px 24px;
+            background: var(--gradient-hero);
+            color: var(--cor-branco);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-acessar:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            opacity: 0.95;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 48px 24px;
+            background: var(--cor-preto);
+            color: var(--cor-branco);
+            margin-top: 100px;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 20px 60px;
+                min-height: auto;
+            }
+
+            .grito-guerra {
+                padding: 24px 32px;
+                font-size: 1.2rem;
+            }
+
+            .grid-provas {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        /* --- Scroll Animation --- */
+        @media (prefers-reduced-motion: no-preference) {
+            .card {
+                opacity: 0;
+                animation: fadeInUp 0.6s ease-out forwards;
+            }
+
+            .card:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .card:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .card:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            .card:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+            .card:nth-child(5) {
+                animation-delay: 0.5s;
+            }
+
+            .card:nth-child(6) {
+                animation-delay: 0.6s;
+            }
+
+            .card:nth-child(7) {
+                animation-delay: 0.7s;
+            }
+        }
+
+        /* --- Author Grid Styles --- */
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+            margin-bottom: 80px;
+        }
+
+        .author-card {
+            background: var(--cor-branco);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--cor-cinza-claro);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .author-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--cor-terracota);
+        }
+
+        .author-img-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            border: 4px solid var(--cor-gelo);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .author-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .author-card:hover .author-img-wrapper {
+            border-color: var(--cor-terracota);
+            box-shadow: 0 0 0 4px rgba(211, 84, 0, 0.2);
+        }
+
+        .author-card h3 {
+            color: var(--cor-terracota);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .author-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--cor-texto);
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="hero-content">
+            <h4 class="hero-subtitle">Gincana Unidos pelo Futuro</h4>
+            <h1 class="hero-title">EQUIPE BRANCA</h1>
+
+            <!-- Banner Video -->
+            <video autoplay loop muted playsinline class="hero-banner">
+                <source src="Foto_Animada_em_Vídeo.mp4" type="video/mp4">
+                Seu navegador não suporta o elemento de vídeo.
+            </video>
+
+            <p class="hero-theme">A linguagem como instrumento de resistência e identidade</p>
+
+            <div class="grito-guerra">
+                "Com Respeito e União<br>
+                Brancos, Negros uma Só Nação"
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- Autores Homenageados Section (Moved to Top) -->
+            <div style="text-align: center; margin-bottom: 48px;">
+                <h2 style="color: var(--cor-terracota); margin-bottom: 16px;">Autores Homenageados</h2>
+                <p style="max-width: 600px; margin: 0 auto; opacity: 0.8;">Grandes vozes que ecoam através da história e
+                    inspiram nossa resistência.</p>
+            </div>
+
+            <div class="authors-grid">
+                <!-- Carolina Maria de Jesus -->
+                <div class="author-card">
+                    <div class="author-img-wrapper">
+                        <video autoplay muted playsinline poster="carolina-maria-de-jesus.png" class="author-img">
+                            <source src="carolina-maria-de-jesus.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Carolina Maria de Jesus</h3>
+                    <p>Escritora brasileira, conhecida por seu livro "Quarto de Despejo", onde relatou a dura realidade
+                        da favela com uma voz potente e única.</p>
+                </div>
+
+                <!-- Nelson Mandela -->
+                <div class="author-card">
+                    <div class="author-img-wrapper">
+                        <video autoplay muted playsinline poster="nelson-mandela.png" class="author-img">
+                            <source src="nelson-mandela.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Nelson Mandela</h3>
+                    <p>Líder sul-africano e símbolo global da luta contra o apartheid, dedicou sua vida à liberdade,
+                        igualdade e reconciliação.</p>
+                </div>
+
+                <!-- Angela Davis -->
+                <div class="author-card">
+                    <div class="author-img-wrapper">
+                        <video autoplay muted playsinline poster="angela-davis.png" class="author-img">
+                            <source src="angela-davis.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Angela Davis</h3>
+                    <p>Filósofa e ativista norte-americana, ícone do movimento negro e feminista, luta incansavelmente
+                        por justiça social e direitos civis.</p>
+                </div>
+
+                <!-- Januário Garcia -->
+                <div class="author-card">
+                    <div class="author-img-wrapper">
+                        <video autoplay muted playsinline poster="januario-garcia.png" class="author-img">
+                            <source src="januario-garcia.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Januário Garcia</h3>
+                    <p>Fotógrafo brasileiro que documentou a história e a cultura negra no Brasil, preservando a memória
+                        e a identidade afro-brasileira.</p>
+                </div>
+
+                <!-- Zumbi dos Palmares -->
+                <div class="author-card">
+                    <div class="author-img-wrapper">
+                        <video autoplay muted playsinline poster="zumbi-dos-palmares.png" class="author-img">
+                            <source src="zumbi-dos-palmares.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Zumbi dos Palmares</h3>
+                    <p>Líder do Quilombo dos Palmares e símbolo máximo da resistência negra contra a escravidão no
+                        Brasil colonial.</p>
+                </div>
+            </div>
+
+            <!-- Grid Provas -->
+            <div class="grid-provas">
+
+                <!-- Card 1: Poema -->
+                <div class="card">
+                    <span class="tag-prova">Prova 2 - Produção Textual</span>
+                    <h3>Poema Autoral</h3>
+                    <p><strong>"Vozes Caladas"</strong></p>
+                    <p>A linguagem poética como forma de expressar a identidade, resistência e memória.</p>
+                    <a href="poema.html" class="btn-acessar">Ler Poema</a>
+                </div>
+
+                <!-- Card 2: Jogo da Memória -->
+                <div class="card">
+                    <span class="tag-prova">Interativo</span>
+                    <h3>Jogo da Memória</h3>
+                    <p><strong>Símbolos Adinkra</strong></p>
+                    <p>Desafie sua mente e aprenda sobre a sabedoria ancestral dos símbolos africanos.</p>
+                    <a href="jogo-memoria.html" class="btn-acessar">Jogar Agora</a>
+                </div>
+
+                <!-- Card 3: Apresentações -->
+                <div class="card">
+                    <span class="tag-prova">Prova 2 - Dança e Desfile</span>
+                    <h3>Apresentações Culturais</h3>
+                    <p><strong>Dança e Beleza Negra</strong></p>
+                    <p>Nossas performances de dança e o desfile exaltando a beleza negra.</p>
+                    <a href="apresentacoes.html" class="btn-acessar">Ver Apresentações</a>
+                </div>
+
+                <!-- Card 4: Intelecto -->
+                <div class="card">
+                    <span class="tag-prova">Provas 4 e 5</span>
+                    <h3>Intelecto e Arte</h3>
+                    <p><strong>Debate e Cartaz</strong></p>
+                    <p>Nossa participação na Mesa de Perguntas e a expressão artística do Cartaz.</p>
+                    <a href="intelecto.html" class="btn-acessar">Ver Detalhes</a>
+                </div>
+
+                <!-- Card 5: Esportes -->
+                <div class="card">
+                    <span class="tag-prova">Provas 7 a 10</span>
+                    <h3>Esportes</h3>
+                    <p><strong>Futsal e Handebol</strong></p>
+                    <p>Conheça nossos atletas e as modalidades que disputamos com garra.</p>
+                    <a href="esportes.html" class="btn-acessar">Ver Times</a>
+                </div>
+
+                <!-- Card 6: Biografia (EJA) -->
+                <div class="card">
+                    <span class="tag-prova">Prova 3 - Destaque</span>
+                    <h3>Biografia (EJA)</h3>
+                    <p><strong>Pesquisa Coletiva</strong></p>
+                    <p>Uma homenagem especial às personalidades negras brasileiras.</p>
+                    <a href="biografia.html" class="btn-acessar">Ver Homenagem</a>
+                </div>
+
+                <!-- Card 7: Encerramento -->
+                <div class="card">
+                    <span class="tag-prova">Prova 11 - Encerramento</span>
+                    <h3>A Palavra que Liberta</h3>
+                    <p><strong>Leitura Encenada</strong></p>
+                    <p>Homenagem a grandes autores que marcaram a história com suas palavras.</p>
+                    <a href="encerramento.html" class="btn-acessar">Ver Encerramento</a>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Equipe Branca - Gincana Unidos pelo Futuro</p>
+        <p style="margin-top: 8px; font-size: 0.85rem;">Desenvolvido com ❤️ para a Gincana UPF</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('.author-img');
+
+            videos.forEach(video => {
+                // Ensure loop is disabled so 'ended' event fires
+                video.loop = false;
+
+                video.addEventListener('ended', function () {
+                    // Reverse playback
+                    const frameTime = 33; // ~30fps
+                    const step = 0.04; // Rewind speed
+
+                    const reverseInterval = setInterval(() => {
+                        if (video.currentTime <= 0.1) {
+                            clearInterval(reverseInterval);
+                            video.currentTime = 0;
+                            video.play(); // Play forward again
+                        } else {
+                            video.currentTime -= step;
+                        }
+                    }, frameTime);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

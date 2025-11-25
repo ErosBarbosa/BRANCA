@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jogo da Memória Africano - Equipe Branca">
+    <title>Jogo da Memória Africano | Equipe Branca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Root Variables --- */
+        :root {
+            --cor-branco: #ffffff;
+            --cor-gelo: #f8f9fa;
+            --cor-cinza-claro: #e9ecef;
+            --cor-texto: #2c3e50;
+            --cor-terracota: #d35400;
+            --cor-terra: #c0392b;
+            --cor-laranja: #e67e22;
+            --cor-preto: #1a1a1a;
+            --gradient-hero: linear-gradient(135deg, #d35400 0%, #c0392b 50%, #e67e22 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: var(--cor-texto);
+        }
+
+        /* --- Header --- */
+        .game-header {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .game-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .game-header p {
+            color: var(--cor-texto);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--cor-branco);
+            color: var(--cor-terracota);
+            border: 2px solid var(--cor-terracota);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-button:hover {
+            background: var(--cor-terracota);
+            color: var(--cor-branco);
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- Game Container --- */
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Controls Panel --- */
+        .controls-panel {
+            background: var(--cor-branco);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--cor-cinza-claro);
+            background: var(--cor-branco);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: var(--cor-texto);
+        }
+
+        .difficulty-btn:hover {
+            border-color: var(--cor-laranja);
+            transform: translateY(-2px);
+        }
+
+        .difficulty-btn.active {
+            background: var(--gradient-hero);
+            color: var(--cor-branco);
+            border-color: transparent;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cor-terracota);
+        }
+
+        .new-game-btn {
+            padding: 12px 24px;
+            background: var(--gradient-hero);
+            color: var(--cor-branco);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .new-game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- Game Board --- */
+        .game-board {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .game-board.easy {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-board.medium {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-board.hard {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Memory Card --- */
+        .memory-card {
+            aspect-ratio: 1;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .card-front {
+            background: var(--cor-branco);
+            transform: rotateY(180deg);
+        }
+
+        .card-back {
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-back::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.1) 10px,
+                    transparent 10px,
+                    transparent 20px);
+        }
+
+        .memory-card:not(.flipped):not(.matched):hover .card-face {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- Adinkra Symbols (CSS) --- */
+        .symbol {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            color: var(--cor-terracota);
+        }
+
+        .symbol-gye-nyame::before {
+            content: "☥";
+            color: #d35400;
+        }
+
+        .symbol-sankofa::before {
+            content: "🦅";
+            color: #e67e22;
+        }
+
+        .symbol-dwennimmen::before {
+            content: "♈";
+            color: #c0392b;
+        }
+
+        .symbol-nkyinkyim::before {
+            content: "⚡";
+            color: #d35400;
+        }
+
+        .symbol-aya::before {
+            content: "🌿";
+            color: #e67e22;
+        }
+
+        .symbol-bese::before {
+            content: "🥜";
+            color: #c0392b;
+        }
+
+        .symbol-eban::before {
+            content: "⚒";
+            color: #d35400;
+        }
+
+        .symbol-funtun::before {
+            content: "🐊";
+            color: #e67e22;
+        }
+
+        /* --- Victory Modal --- */
+        .victory-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .victory-modal.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .victory-content {
+            background: var(--cor-branco);
+            border-radius: 24px;
+            padding: 48px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .victory-content h2 {
+            font-size: 2.5rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+        }
+
+        .victory-stats {
+            margin: 24px 0;
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+        }
+
+        .victory-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .victory-stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            font-weight: 600;
+        }
+
+        .victory-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cor-terracota);
+        }
+
+        .play-again-btn {
+            margin-top: 24px;
+            padding: 16px 32px;
+            background: var(--gradient-hero);
+            color: var(--cor-branco);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .play-again-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- Best Score Badge --- */
+        .best-score {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: var(--cor-preto);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .back-button {
+                position: static;
+                margin-bottom: 16px;
+            }
+
+            .controls-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .difficulty-selector,
+            .game-info {
+                justify-content: center;
+            }
+
+            .game-board.easy,
+            .game-board.medium,
+            .game-board.hard {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .victory-content {
+                padding: 32px 24px;
+            }
+
+            .victory-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .symbol {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-button">
+        ← Voltar ao Site
+    </a>
+
+    <div class="game-header">
+        <h1>🎮 Jogo da Memória Africano</h1>
+        <p>Descubra os símbolos Adinkra tradicionais</p>
+    </div>
+
+    <div class="game-container">
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <div>
+                <div class="info-label" style="margin-bottom: 12px;">Dificuldade:</div>
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" data-difficulty="easy">Fácil</button>
+                    <button class="difficulty-btn" data-difficulty="medium">Médio</button>
+                    <button class="difficulty-btn" data-difficulty="hard">Difícil</button>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="info-label">Tempo</span>
+                    <span class="info-value" id="timer">0:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Movimentos</span>
+                    <span class="info-value" id="moves">0</span>
+                </div>
+            </div>
+
+            <button class="new-game-btn" id="newGameBtn">Novo Jogo</button>
+        </div>
+
+        <!-- Game Board -->
+        <div class="game-board easy" id="gameBoard"></div>
+    </div>
+
+    <!-- Victory Modal -->
+    <div class="victory-modal" id="victoryModal">
+        <div class="victory-content">
+            <h2>🎉 Parabéns!</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 16px;">Você completou o jogo!</p>
+
+            <div class="victory-stats">
+                <div class="victory-stat">
+                    <span class="victory-stat-label">Tempo</span>
+                    <span class="victory-stat-value" id="finalTime">0:00</span>
+                </div>
+                <div class="victory-stat">
+                    <span class="victory-stat-label">Movimentos</span>
+                    <span class="victory-stat-value" id="finalMoves">0</span>
+                </div>
+            </div>
+
+            <div id="bestScoreDisplay"></div>
+
+            <button class="play-again-btn" id="playAgainBtn">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            difficulty: 'easy',
+            cards: [],
+            flippedCards: [],
+            matchedPairs: 0,
+            moves: 0,
+            timer: 0,
+            timerInterval: null,
+            isProcessing: false
+        };
+
+        // Adinkra Symbols
+        const symbols = [
+            { name: 'gye-nyame', class: 'symbol-gye-nyame', meaning: 'Supremacia de Deus' },
+            { name: 'sankofa', class: 'symbol-sankofa', meaning: 'Aprender com o passado' },
+            { name: 'dwennimmen', class: 'symbol-dwennimmen', meaning: 'Força e humildade' },
+            { name: 'nkyinkyim', class: 'symbol-nkyinkyim', meaning: 'Iniciativa e dinamismo' },
+            { name: 'aya', class: 'symbol-aya', meaning: 'Resistência e defesa' },
+            { name: 'bese', class: 'symbol-bese', meaning: 'Abundância e poder' },
+            { name: 'eban', class: 'symbol-eban', meaning: 'Segurança e proteção' },
+            { name: 'funtun', class: 'symbol-funtun', meaning: 'Unidade na diversidade' }
+        ];
+
+        // Difficulty Settings
+        const difficultySettings = {
+            easy: { pairs: 4, gridClass: 'easy' },
+            medium: { pairs: 6, gridClass: 'medium' },
+            hard: { pairs: 8, gridClass: 'hard' }
+        };
+
+        // DOM Elements
+        const gameBoard = document.getElementById('gameBoard');
+        const timerDisplay = document.getElementById('timer');
+        const movesDisplay = document.getElementById('moves');
+        const victoryModal = document.getElementById('victoryModal');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+
+        // Initialize Game
+        function initGame() {
+            resetGameState();
+            createBoard();
+            startTimer();
+        }
+
+        // Reset Game State
+        function resetGameState() {
+            gameState.flippedCards = [];
+            gameState.matchedPairs = 0;
+            gameState.moves = 0;
+            gameState.timer = 0;
+            gameState.isProcessing = false;
+
+            clearInterval(gameState.timerInterval);
+            updateDisplay();
+            victoryModal.classList.remove('show');
+        }
+
+        // Create Game Board
+        function createBoard() {
+            const setting = difficultySettings[gameState.difficulty];
+            const selectedSymbols = symbols.slice(0, setting.pairs);
+
+            // Create pairs and shuffle
+            const cardPairs = [...selectedSymbols, ...selectedSymbols];
+            gameState.cards = shuffleArray(cardPairs);
+
+            // Update board class
+            gameBoard.className = `game-board ${setting.gridClass}`;
+
+            // Clear and populate board
+            gameBoard.innerHTML = '';
+            gameState.cards.forEach((symbol, index) => {
+                const card = createCard(symbol, index);
+                gameBoard.appendChild(card);
+            });
+        }
+
+        // Create Card Element
+        function createCard(symbol, index) {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.dataset.index = index;
+            card.dataset.symbol = symbol.name;
+
+            card.innerHTML = `
+                <div class="card-face card-front">
+                    <div class="symbol ${symbol.class}" title="${symbol.meaning}"></div>
+                </div>
+                <div class="card-face card-back"></div>
+            `;
+
+            card.addEventListener('click', () => handleCardClick(card));
+
+            return card;
+        }
+
+        // Handle Card Click
+        function handleCardClick(card) {
+            if (gameState.isProcessing) return;
+            if (card.classList.contains('flipped')) return;
+            if (card.classList.contains('matched')) return;
+            if (gameState.flippedCards.length >= 2) return;
+
+            // Flip card
+            card.classList.add('flipped');
+            gameState.flippedCards.push(card);
+
+            // Check for match
+            if (gameState.flippedCards.length === 2) {
+                gameState.moves++;
+                updateDisplay();
+                checkForMatch();
+            }
+        }
+
+        // Check for Match
+        function checkForMatch() {
+            gameState.isProcessing = true;
+            const [card1, card2] = gameState.flippedCards;
+            const isMatch = card1.dataset.symbol === card2.dataset.symbol;
+
+            setTimeout(() => {
+                if (isMatch) {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    gameState.matchedPairs++;
+
+                    if (gameState.matchedPairs === difficultySettings[gameState.difficulty].pairs) {
+                        setTimeout(() => endGame(), 600);
+                    }
+                } else {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                }
+
+                gameState.flippedCards = [];
+                gameState.isProcessing = false;
+            }, 800);
+        }
+
+        // Timer
+        function startTimer() {
+            gameState.timerInterval = setInterval(() => {
+                gameState.timer++;
+                updateDisplay();
+            }, 1000);
+        }
+
+        // Update Display
+        function updateDisplay() {
+            const minutes = Math.floor(gameState.timer / 60);
+            const seconds = gameState.timer % 60;
+            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            movesDisplay.textContent = gameState.moves;
+        }
+
+        // End Game
+        function endGame() {
+            clearInterval(gameState.timerInterval);
+
+            // Update victory modal
+            document.getElementById('finalTime').textContent = timerDisplay.textContent;
+            document.getElementById('finalMoves').textContent = gameState.moves;
+
+            // Check and update best score
+            updateBestScore();
+
+            // Show victory modal
+            victoryModal.classList.add('show');
+        }
+
+        // Best Score Management
+        function updateBestScore() {
+            const scoreKey = `bestScore_${gameState.difficulty}`;
+            const currentScore = {
+                time: gameState.timer,
+                moves: gameState.moves
+            };
+
+            const bestScore = JSON.parse(localStorage.getItem(scoreKey)) || null;
+            const bestScoreDisplay = document.getElementById('bestScoreDisplay');
+
+            if (!bestScore || currentScore.moves < bestScore.moves ||
+                (currentScore.moves === bestScore.moves && currentScore.time < bestScore.time)) {
+                localStorage.setItem(scoreKey, JSON.stringify(currentScore));
+                bestScoreDisplay.innerHTML = '<div class="best-score">🏆 Novo Recorde!</div>';
+            } else {
+                const minutes = Math.floor(bestScore.time / 60);
+                const seconds = bestScore.time % 60;
+                bestScoreDisplay.innerHTML = `
+                    <div class="best-score">
+                        📊 Melhor: ${bestScore.moves} movimentos em ${minutes}:${seconds.toString().padStart(2, '0')}
+                    </div>
+                `;
+            }
+        }
+
+        // Shuffle Array
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Event Listeners
+        newGameBtn.addEventListener('click', initGame);
+        playAgainBtn.addEventListener('click', initGame);
+
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                gameState.difficulty = btn.dataset.difficulty;
+                initGame();
+            });
+        });
+
+        // Initialize on load
+        initGame();
+    </script>
+</body>
+
+</html>

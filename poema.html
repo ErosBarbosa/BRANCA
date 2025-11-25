@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vozes Caladas - Poema Autoral - Equipe Branca">
+    <title>Vozes Caladas | Equipe Branca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Root Variables --- */
+        :root {
+            --cor-branco: #ffffff;
+            --cor-gelo: #f8f9fa;
+            --cor-cinza-claro: #e9ecef;
+            --cor-texto: #2c3e50;
+            --cor-terracota: #d35400;
+            --cor-terra: #c0392b;
+            --cor-laranja: #e67e22;
+            --cor-preto: #1a1a1a;
+            --gradient-hero: linear-gradient(135deg, #d35400 0%, #c0392b 50%, #e67e22 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: var(--cor-texto);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--cor-branco);
+            color: var(--cor-terracota);
+            border: 2px solid var(--cor-terracota);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-button:hover {
+            background: var(--cor-terracota);
+            color: var(--cor-branco);
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .poema-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--cor-branco);
+            border-radius: 24px;
+            padding: 64px 48px;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid var(--cor-laranja);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .poema-container::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 40px;
+            font-size: 200px;
+            color: rgba(211, 84, 0, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .poema-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag-prova {
+            background: var(--cor-preto);
+            color: var(--cor-branco);
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            border-radius: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 24px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        h1 {
+            color: var(--cor-terracota);
+            margin-bottom: 32px;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+        }
+
+        .poema-intro {
+            font-style: italic;
+            color: var(--cor-texto);
+            opacity: 0.9;
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        .poema-text {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.15rem;
+            line-height: 2;
+            color: var(--cor-texto);
+            white-space: pre-line;
+            margin: 32px 0;
+        }
+
+        .poema-text pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            color: inherit;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .poema-author {
+            font-weight: 600;
+            color: var(--cor-terracota);
+            margin-top: 48px;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .back-button {
+                position: static;
+                margin-bottom: 24px;
+            }
+
+            .poema-container {
+                padding: 40px 24px;
+            }
+
+            .poema-text {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+
+            .poema-container::before {
+                font-size: 120px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-button">
+        ← Voltar ao Site
+    </a>
+
+    <div class="poema-container">
+        <div class="poema-content">
+            <span class="tag-prova">Prova 2 - Produção Textual</span>
+            <h1>Vozes Caladas</h1>
+            <p class="poema-intro">A linguagem poética como forma de expressar a identidade</p>
+
+            <div class="poema-text">
+                <pre>
+Vozes de mães longe dos filhos, 
+Gente vendida feito animais, 
+Humilhados, tratados como lixo, 
+Dores que não esquecemos jamais.
+
+Vozes que tentaram nos calar, 
+Mas o tambor soou na terra batida, 
+Sangue de reis a pulsar, 
+Não por vingança, mas pela vida.
+
+Resistência que rompe o concreto, 
+Vozes caladas, mas não esquecidas, 
+Erguendo a cultura e o afeto, 
+Curando as nossas feridas.
+
+Recontada com verdade de quem somos, 
+O que antes tinha sido apagado, 
+Com orgulho de tudo o que fomos, 
+Em páginas de ouro registrado.
+
+Gritamos por justiça e liberdade, 
+Contra a ignorância e a maldade, 
+Somos força, negritude e beleza, 
+Sinônimo de luta e equidade.
+                </pre>
+
+                <p class="poema-author">— Autor: Jonas Tadeu</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
